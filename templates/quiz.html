@@ -2,14 +2,22 @@
 <html>
 <head>
     <title>Quiz on {{ topic }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Quiz on {{ topic }}</h1>
-    <ul>
+    <div class="container">
+        <h1>Quiz on {{ topic }}</h1>
         {% for question in questions %}
-            <li>{{ question }}</li>
+        <div class="question">
+            <p>{{ question.text }}</p>
+            <ul class="choices">
+                {% for choice in question.choices %}
+                <li>{{ choice }}</li>
+                {% endfor %}
+            </ul>
+        </div>
         {% endfor %}
-    </ul>
-    <a href="/">Go Back</a>
+        <a class="back-link" href="/">Go Back</a>
+    </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from ai71 import AI71
+import re
 
 app = Flask(__name__)
 AI71_API_KEY = "ai71-api-bd8523eb-052d-478a-9967-fa02af9c98af"
@@ -7,6 +8,8 @@ AI71_API_KEY = "ai71-api-bd8523eb-052d-478a-9967-fa02af9c98af"
 def generate_quiz(topic, num_questions):
     questions = []
     prompt = f"Generate {num_questions} quiz questions on the topic: {topic}"
+    question_text = ""
+    
     for chunk in AI71(AI71_API_KEY).chat.completions.create(
         model="tiiuae/falcon-180b-chat",
         messages=[
@@ -16,7 +19,20 @@ def generate_quiz(topic, num_questions):
         stream=True,
     ):
         if chunk.choices[0].delta.content:
-            questions.append(chunk.choices[0].delta.content)
+            question_text += chunk.choices[0].delta.content
+    
+    print("DEBUG: Full response from AI71:")
+    print(question_text)
+    
+    # Split the questions based on numbered pattern
+    question_blocks = re.split(r'\d+\.', question_text)
+    
+    for block in question_blocks[1:]:  # skip the first empty split
+        lines = block.strip().split('\n')
+        question_text = lines[0].strip()
+        choices = [line.strip() for line in lines[1:]]
+        questions.append({"text": question_text, "choices": choices})
+    
     return questions
 
 @app.route('/')

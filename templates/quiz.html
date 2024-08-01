@@ -11,16 +11,20 @@
             {% for question in questions %}
             <div class="question">
                 <p>{{ question.text }}</p>
+
+
                 <ul class="choices">
                     {% for choice in question.choices %}
                     <li>
                         <label>
-                            <input type="radio" name="question_{{ loop.index0 }}" value="{{ choice }}" required>
+                            <input type="radio" name="{{question.text}}" value="{{ choice }}" required>
                             {{ choice }}
                         </label>
                     </li>
                     {% endfor %}
                 </ul>
+
+                
             </div>
             {% endfor %}
             <button type="submit">Submit</button>

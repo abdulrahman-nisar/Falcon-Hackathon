@@ -7,16 +7,24 @@
 <body>
     <div class="container">
         <h1>Quiz on {{ topic }}</h1>
-        {% for question in questions %}
-        <div class="question">
-            <p>{{ question.text }}</p>
-            <ul class="choices">
-                {% for choice in question.choices %}
-                <li>{{ choice }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endfor %}
+        <form action="/submit" method="POST">
+            {% for question in questions %}
+            <div class="question">
+                <p>{{ question.text }}</p>
+                <ul class="choices">
+                    {% for choice in question.choices %}
+                    <li>
+                        <label>
+                            <input type="radio" name="question_{{ loop.index0 }}" value="{{ choice }}" required>
+                            {{ choice }}
+                        </label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
         <a class="back-link" href="/">Go Back</a>
     </div>
 </body>

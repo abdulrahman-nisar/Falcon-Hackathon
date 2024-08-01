@@ -53,7 +53,7 @@ def generate_quiz(topic, num_questions):
     # Print or use the answers as needed
     print("\n")
     for i, answer in enumerate(quiz_answers, start=1):
-        print(f"A{i}: {answer}")
+        print(f"{answer}")
 
 
     #End of sirdard

@@ -32,9 +32,9 @@ def generate_quiz(topic, num_questions):
         question_text = lines[0].strip()
         choices = []
         for line in lines[1:]:
-            choice_match = re.match(r'[a-d]\)', line.strip())
-            if choice_match:
-                choices.append(line.strip())
+            # choice_match = re.match(r'[a-d]\)', line.strip())
+            # if choice_match:
+            choices.append(line.strip())
         questions.append({"text": question_text, "choices": choices})
     
     return questions

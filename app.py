@@ -7,7 +7,7 @@ AI71_API_KEY = "ai71-api-bd8523eb-052d-478a-9967-fa02af9c98af"
 
 def generate_quiz(topic, num_questions):
     questions = []
-    prompt = f"Generate {num_questions} quiz questions on the topic: {topic}"
+    prompt = f"Generate {num_questions} quiz questions on the topic: {topic} with choices"
     question_text = ""
     
     for chunk in AI71(AI71_API_KEY).chat.completions.create(
@@ -30,7 +30,11 @@ def generate_quiz(topic, num_questions):
     for block in question_blocks[1:]:  # skip the first empty split
         lines = block.strip().split('\n')
         question_text = lines[0].strip()
-        choices = [line.strip() for line in lines[1:]]
+        choices = []
+        for line in lines[1:]:
+            choice_match = re.match(r'[a-d]\)', line.strip())
+            if choice_match:
+                choices.append(line.strip())
         questions.append({"text": question_text, "choices": choices})
     
     return questions

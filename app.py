@@ -2,6 +2,29 @@ from flask import Flask, render_template, request
 from ai71 import AI71
 import re
 
+
+
+def is_valid_input(topic):
+    # Check if the input contains only alphabetic words with optional spaces
+    if not re.match(r'^[a-zA-Z\s]+$', topic):
+        return False
+
+    # Check if the input contains at least one meaningful word and is not just a random string
+    # Use a pattern to match sequences of letters with spaces, but ensure there are not too many consecutive letters
+    meaningful_words = re.findall(r'[a-zA-Z]{2,}', topic)
+    
+    # Ensure that there is at least one meaningful word and the topic is not just a random string
+    return len(meaningful_words) > 0 and not re.match(r'^[a-zA-Z]{10,}$', topic)
+
+
+def is_number(str):
+    try:
+        int(str)
+        return True
+    except ValueError:
+        return False
+
+
 questions_store = []        #Store the list of all questions
 answers = []                #Store the list of answers
 
@@ -101,7 +124,13 @@ def generate():
     global questions
     topic = request.form['topic']
     num_questions = request.form['num_questions']
+    
+    #Checking for avlid input
+    if(is_valid_input(topic) == False):
+        return render_template('home.html')
+    
     questions = generate_quiz(topic, num_questions)
+    
     return render_template('quiz.html', topic=topic, questions=questions)
 
 

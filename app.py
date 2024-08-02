@@ -99,7 +99,6 @@ def home():
 def generate():
     """Create the quiz page"""
     global questions
-    
     topic = request.form['topic']
     num_questions = request.form['num_questions']
     questions = generate_quiz(topic, num_questions)
@@ -123,25 +122,38 @@ def submit():
     total_score = len(questions)
     
     # Clean correct answers
-    stripped_answers = [re.sub(r'^[a-d]\)\s*', '', answer) for answer in answers]
+    stripped_answers = [re.sub(r'^[a-dA-D]\.\s*', '', answer) for answer in answers]
+
+    # Debugging information
+    print(f"User Answers: {user_answers}")
+    print(f"Stripped Answers: {stripped_answers}")
 
     # Calculate score
     for key, value in user_answers.items():
         question_index = int(key.split('_')[1])
-        if value == stripped_answers[question_index]:
-            score += 1
-        print(f"User answer: {value}, Correct answer: {stripped_answers[question_index]}")
+        
+        # Debugging information
+        print(f"Processing Question Index: {question_index}")
+        
+        # Check if the question_index is within the valid range
+        if question_index < len(stripped_answers):
+            if value == stripped_answers[question_index]:
+                score += 1
+            print(f"User answer: {value}, Correct answer: {stripped_answers[question_index]}")
+        else:
+            print(f"Question index {question_index} is out of range for stripped_answers")
 
     # Prepare cleaned data for template
     cleaned_questions = [
         {
             'text': q['text'],
-            'choices': [re.sub(r'^[a-d]\)\s*', '', choice) for choice in q['choices']]
+            'choices': [re.sub(r'^[a-dA-D]\.\s*', '', choice) for choice in q['choices']]
         }
         for q in questions
     ]
 
-    print(f"Stripped answers: {stripped_answers}")
+    # Debugging information
+    print(f"Cleaned Questions: {cleaned_questions}")
 
     # Return result page with user's score and answers data
     return render_template(
@@ -152,7 +164,6 @@ def submit():
         user_answers=user_answers,
         answers=stripped_answers
     )
-
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>FalconQuiz </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FalconQuiz</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 </head>
 
 <body>
+    <header>
+        <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Falcon Icon" class="header-icon">
+        <h1>Falcon Quiz</h1>
+    </header>
     <div class="container">
-        <h1>Quiz Generator</h1>
         <form action="/generate" method="post">
             <label for="topic">Topic:</label>
             <input type="text" id="topic" name="topic" required>

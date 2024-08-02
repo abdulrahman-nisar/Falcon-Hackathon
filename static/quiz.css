@@ -1,12 +1,42 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
 }
 
-h1 {
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding:   10px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: 100px auto 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
     color: #333;
+    text-align: center;
+    background-color: #4CAF50;
+    border-radius: 10px;
+    padding: 10px;
 }
-
 
 .question {
     margin-top: 20px;
@@ -23,23 +53,34 @@ h1 {
     margin: 5px 0;
 }
 
+header img.header-icon {
+    width: 40px; 
+    height: 40px; 
+    margin-right: 10px; 
+}
+
+button[type="submit"],
 .back-link {
-    display: block;
-    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
     text-decoration: none;
-    color: #007bff;
+    text-align: center;
+    margin-right: 10px;
+    font-size:16px;
 }
 
+button[type="submit"]:hover,
 .back-link:hover {
-    text-decoration: underline;
+    background-color: #45a049;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-}
-
-.container {
-    max-width: 600px;
-    margin: 0 auto;
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+    
 }

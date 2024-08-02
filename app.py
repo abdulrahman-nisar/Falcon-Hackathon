@@ -117,6 +117,7 @@ def submit():
     user_answers = {
         f"question_{index}": re.sub(r'^[a-dA-D]\.\s*', '', value) for index, (key, value) in enumerate(request.form.items())
     }
+    
 
     score = 0  # User score
     total_score = len(questions)

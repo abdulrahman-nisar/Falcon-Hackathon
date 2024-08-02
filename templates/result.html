@@ -9,43 +9,32 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>Results</h1>
+<div class="container"> 
     <div class="score">
+        <h1>Results</h1>
         <p>Your score: {{ score }} / {{ total_score }}</p>
     </div>
     <div class="quiz-review">
         {% for question in questions %}
             <div class="question-block">
-                <p><strong>{{ question.text }}</strong></p>
+                <p class="question-text"><strong>{{ question.text }}</strong></p>
                 <ul class="choices">
-                    {% set index = loop.index0 %}
                     {% for choice in question.choices %}
-                        {% set is_user_answer = choice in user_answers.values() %}
-                        {% set is_correct_answer = choice in answers %}
-                        <li class="
-                            {% if is_user_answer %}
-                                {% if is_correct_answer %}
-                                    correct
-                                {% else %}
-                                    incorrect
-                                {% endif %}
-                            {% elif is_correct_answer %}
-                                correct
-                            {% endif %}
-                        ">
-                            {{ choice }}
-                        </li>
+                        <li>{{ choice }}</li>
                     {% endfor %}
                 </ul>
+                <p class="answer-info">
+                    <strong>Your answer:</strong> {{ user_answers['question_' + loop.index0|string] }}
+                </p>
+                <p class="answer-info">
+                    <strong>Correct answer:</strong> {{ answers[loop.index0] }}
+                </p>
             </div>
         {% endfor %}
     </div>
 
-     <a href="/">Take Quiz Again</a>
+    <a class="back-link" href="/">Take Quiz Again</a>
 </div>
-
-
 
 </body>
 </html>

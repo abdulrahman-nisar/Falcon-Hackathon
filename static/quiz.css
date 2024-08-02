@@ -7,10 +7,6 @@ h1 {
     color: #333;
 }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-}
 
 .question {
     margin-top: 20px;
@@ -36,4 +32,14 @@ h1 {
 
 .back-link:hover {
     text-decoration: underline;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
 }

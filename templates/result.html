@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Results</h1>
+    <div class="score">
+        <p>Your score: {{ score }} / {{ total_score }}</p>
+    </div>
+    <div class="quiz-review">
+        {% for question in questions %}
+            <div class="question-block">
+                <p><strong>{{ question.text }}</strong></p>
+                <ul class="choices">
+                    {% set index = loop.index0 %}
+                    {% for choice in question.choices %}
+                        {% set is_user_answer = choice in user_answers.values() %}
+                        {% set is_correct_answer = choice in answers %}
+                        <li class="
+                            {% if is_user_answer %}
+                                {% if is_correct_answer %}
+                                    correct
+                                {% else %}
+                                    incorrect
+                                {% endif %}
+                            {% elif is_correct_answer %}
+                                correct
+                            {% endif %}
+                        ">
+                            {{ choice }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+
+     <a href="/">Take Quiz Again</a>
+</div>
+
+
+
+</body>
+</html>

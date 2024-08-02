@@ -63,6 +63,7 @@ def generate_quiz(topic, num_questions):
     # Parse the generated answers into a list
     quiz_answers = answer_text.strip().split('\n')
 
+    # Remove the first three characters from each answer
     quiz_answers = [s[3:] for s in quiz_answers]
     
     
@@ -87,46 +88,64 @@ def generate_quiz(topic, num_questions):
     return questions
 
 @app.route('/')
-def index():
+def home():
     """Starting web page"""
-    return render_template('index.html')
+    return render_template('home.html')
 
 @app.route('/generate', methods=['POST'])
 def generate():
     """Create the quiz page"""
+    global questions
     topic = request.form['topic']
     num_questions = request.form['num_questions']
     questions = generate_quiz(topic, num_questions)
     return render_template('quiz.html', topic=topic, questions=questions)
 
 
+
+
 @app.route('/submit', methods=['POST'])
 def submit():
     """Show result"""
+    global questions
     global answers
-    global questions_store
-    user_answers = {key: value for key, value in request.form.items()}  #getting form data
+
+    # Clean user answers
+    user_answers = {
+        f"question_{index}": re.sub(r'^[a-dA-D]\.\s*', '', value) for index, (key, value) in enumerate(request.form.items())
+    }
+
+    score = 0  # User score
+    total_score = len(questions)
     
-    score = 0   #user score
-    total_score = questions_store.__len__()
-    i = 0
+    # Clean correct answers
+    stripped_answers = [re.sub(r'^[a-d]\)\s*', '', answer) for answer in answers]
 
-    for key,value in user_answers.items():
-        if key in questions_store:      #if the user didn't filled a question
-            if value == answers[i]:
-                score += 1
-        i+=1
+    # Calculate score
+    for key, value in user_answers.items():
+        question_index = int(key.split('_')[1])
+        if value == stripped_answers[question_index]:
+            score += 1
+        print(f"User answer: {value}, Correct answer: {stripped_answers[question_index]}")
 
-    print(f"Total score is {total_score}")
-    print(f"your score is {score}")
+    # Prepare cleaned data for template
+    cleaned_questions = [
+        {
+            'text': q['text'],
+            'choices': [re.sub(r'^[a-d]\)\s*', '', choice) for choice in q['choices']]
+        }
+        for q in questions
+    ]
 
-    print()
-
-    return "My name is Danial"
-   
-
-    
-
+    print(f"Stripped answers: {stripped_answers}")
+    return render_template(
+        'result.html',
+        score=score,
+        total_score=total_score,
+        questions=cleaned_questions,
+        user_answers=user_answers,
+        answers=stripped_answers
+    )
 
 
 if __name__ == '__main__':

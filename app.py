@@ -133,6 +133,9 @@ def generate():
     
     return render_template('quiz.html', topic=topic, questions=questions)
 
+@app.route('/rules')
+def rules():
+    return render_template('rules.html')
 
 
 #Result page when user will submit the answer

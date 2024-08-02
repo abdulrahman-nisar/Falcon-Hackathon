@@ -87,15 +87,19 @@ def generate_quiz(topic, num_questions):
    
     return questions
 
+#Home page for  Again Quiz
 @app.route('/')
 def home():
     """Starting web page"""
     return render_template('home.html')
 
+
+#Quiz generator page
 @app.route('/generate', methods=['POST'])
 def generate():
     """Create the quiz page"""
     global questions
+    
     topic = request.form['topic']
     num_questions = request.form['num_questions']
     questions = generate_quiz(topic, num_questions)
@@ -103,7 +107,7 @@ def generate():
 
 
 
-
+#Result page when user will submit the answer
 @app.route('/submit', methods=['POST'])
 def submit():
     """Show result"""
@@ -138,6 +142,8 @@ def submit():
     ]
 
     print(f"Stripped answers: {stripped_answers}")
+
+    # Return result page with user's score and answers data
     return render_template(
         'result.html',
         score=score,

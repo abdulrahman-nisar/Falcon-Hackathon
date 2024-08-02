@@ -8,25 +8,25 @@ body {
 .container {
   max-width: 800px;
   margin: 0 auto;
-  background-color: #a98080;
+  background-color: #1a85d2;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
 
 .score {
-  font-size: 1.2em;
+  font-size: 35px;
   text-align: center;
   margin-bottom: 20px;
   color: #333;
-  background-color: #007bff;
+  background-color: #1963b3;
   padding: 20px;
   border-radius: 10px;
 }
 
 .question-block {
   margin-bottom: 20px;
-  background-color: #6b9e6d;
+  background-color: #0cb574;
   padding: 9px;
   border-radius: 10px;
 }
@@ -55,13 +55,24 @@ body {
 }
 
 .answer-info strong {
-  color: #000c01; 
+  color: #000c01;
+}
+
+.back-link {
+  text-align: center;
+  margin: 30px;
+  text-decoration: none;
+  color: #040b12;
+  background-color: #0cb574;
+  border-radius: 5px;
+  padding: 15px 25px;
+}
+
+.back-link:hover {
+  background-color: hsl(158, 73%, 43%);
 }
 
 .back-link {
   display: block;
   text-align: center;
-  margin-top: 20px;
-  text-decoration: none;
-  color: #007bff;
 }
